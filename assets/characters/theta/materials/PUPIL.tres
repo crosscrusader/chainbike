@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3]
+
+[ext_resource type="Shader" path="res://assets/characters/theta/toon.gdshader" id="1_toon"]
+
+[resource]
+resource_name = "PUPIL"
+render_priority = 0
+shader = ExtResource("1_toon")
+shader_parameter/base_color = Vector3(0.049, 0.149, 0.191)
+shader_parameter/band_pos = Vector3(0, 0.06, 9)
+shader_parameter/band_val = Vector3(0.11, 0.191, 0.191)
+shader_parameter/spec_strength = 0.6
+shader_parameter/spec_power = 80

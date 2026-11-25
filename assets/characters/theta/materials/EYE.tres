@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3]
+
+[ext_resource type="Shader" path="res://assets/characters/theta/toon.gdshader" id="1_toon"]
+
+[resource]
+resource_name = "EYE"
+render_priority = 0
+shader = ExtResource("1_toon")
+shader_parameter/base_color = Vector3(1, 1, 1)
+shader_parameter/band_pos = Vector3(0, 0.051, 0.082)
+shader_parameter/band_val = Vector3(0.09, 0.504, 1)

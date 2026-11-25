@@ -15,6 +15,11 @@ extends Camera3D
 @export_group("Mouse")
 @export var mouse_sensitivity := 0.0025           # radians per pixel
 @export var invert_mouse_y := false
+## Scroll wheel zoom: each notch multiplies the distance by (1 ± zoom_step).
+@export var zoom_step := 0.12
+@export var min_distance := 2.0
+@export var max_distance := 20.0
+@export var zoom_sharpness := 12.0                # how quickly the zoom eases to the new distance
 
 @export_group("Gamepad")
 @export var stick_yaw_speed := 2.6                # rad/s at full tilt, before any boost
@@ -48,6 +53,7 @@ var yaw := 0.0
 var pitch := deg_to_rad(-20.0)
 var pivot_pos: Vector3
 var current_distance: float
+var zoom_distance: float                          # smoothed version of `distance`
 
 # gamepad state
 var prev_stick_mag := 0.0
@@ -63,6 +69,7 @@ func _ready() -> void:
 	_ensure_look_actions()
 	pivot_pos = player.global_position + pivot_offset
 	current_distance = distance
+	zoom_distance = distance
 	_sphere.radius = collision_radius
 	_query.shape = _sphere
 	_query.collision_mask = collision_mask
@@ -79,6 +86,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		_clamp_pitch()
 	elif event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_WHEEL_UP:
+		distance = clampf(distance * (1.0 - zoom_step), min_distance, max_distance)
+	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+		distance = clampf(distance * (1.0 + zoom_step), min_distance, max_distance)
 	elif event is InputEventMouseButton and event.pressed and Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
@@ -95,13 +106,14 @@ func _process(delta: float) -> void:
 
 	# Sweep a sphere from the pivot towards the wanted camera spot. If it hits
 	# anything, pull the camera in to just before the hit.
-	var allowed := distance
+	zoom_distance = lerpf(zoom_distance, distance, 1.0 - exp(-zoom_sharpness * delta))
+	var allowed := zoom_distance
 	var space := get_world_3d().direct_space_state
 	_query.transform = Transform3D(Basis.IDENTITY, pivot_pos)
-	_query.motion = offset_dir * distance
+	_query.motion = offset_dir * zoom_distance
 	var result := space.cast_motion(_query)
 	if result.size() >= 1 and result[0] < 1.0:
-		allowed = distance * result[0]
+		allowed = zoom_distance * result[0]
 
 	if allowed < current_distance:
 		current_distance = allowed                              # snap in: never clip

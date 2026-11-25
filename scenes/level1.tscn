@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://biqupegmed4vx" path="res://scenes/player.tscn" id="1_g2h75"]
 [ext_resource type="Texture2D" uid="uid://d2uhlii4ubpow" path="res://icon.svg" id="1_m7ahb"]
 [ext_resource type="Script" uid="uid://b6ik0dgdtcw1h" path="res://scripts/camera.gd" id="2_wwpf4"]
+[ext_resource type="PackedScene" path="res://scenes/enemy_cube.tscn" id="3_enemy"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_d75mq"]
 size = Vector3(100, 1, 100)
@@ -15,6 +16,19 @@ uv1_scale = Vector3(30, 30, 30)
 [sub_resource type="BoxMesh" id="BoxMesh_d75mq"]
 material = SubResource("StandardMaterial3D_u8vuu")
 size = Vector3(100, 1, 100)
+
+[sub_resource type="Environment" id="Environment_agx"]
+background_mode = 1
+background_color = Color(0.3, 0.3, 0.3, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.39, 0.39, 0.39, 1)
+tonemap_mode = 4
+
+[sub_resource type="BoxMesh" id="BoxMesh_ru4tf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6sh32"]
+albedo_texture = ExtResource("1_m7ahb")
+uv1_scale = Vector3(4, 4, 4)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8fa42"]
 albedo_color = Color(1, 0.27450982, 1, 1)
@@ -61,35 +75,56 @@ wait_time = 0.3
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1999363441]
 script = ExtResource("2_wwpf4")
+distance = 3.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1781678910]
+environment = SubResource("Environment_agx")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=161846925]
 transform = Transform3D(0.54214996, -0.7152935, 0.44094062, 0, 0.5247533, 0.8512544, -0.8402817, -0.46150756, 0.28449497, 0, 2.9804745, 0)
 shadow_enabled = true
 
+[node name="CSGMesh3D" type="CSGMesh3D" parent="." unique_id=634493200]
+transform = Transform3D(-4.3732277e-07, 1, 0, -10.004779, -4.371139e-08, 0, 0, 0, 24.366623, -8.63156, 5.200152, -3.2174625)
+use_collision = true
+mesh = SubResource("BoxMesh_ru4tf")
+material = SubResource("StandardMaterial3D_6sh32")
+
 [node name="vector" type="MeshInstance3D" parent="." unique_id=50789937]
 transform = Transform3D(0.030498305, 0, 0, 0, 3.799625, 0, 0, 0, 0.31304687, 1.1531656, 1.0962458, 0)
 mesh = SubResource("BoxMesh_xeixp")
 
-[node name="StaticBody3D2" type="StaticBody3D" parent="." unique_id=727981658]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.8212407, 10.18538)
+[node name="Platform1" type="StaticBody3D" parent="." unique_id=1690379061]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.6424813, 20.37076)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2" unique_id=2137226629]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Platform1" unique_id=889144892]
 material_override = SubResource("StandardMaterial3D_dwgg1")
 mesh = SubResource("BoxMesh_8fa42")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2" unique_id=1936120590]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Platform1" unique_id=1757500981]
 shape = SubResource("BoxShape3D_xeixp")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2/CollisionShape3D" unique_id=434749489]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -26.91903)
-shape = SubResource("BoxShape3D_xeixp")
-
-[node name="StaticBody3D2" type="StaticBody3D" parent="StaticBody3D2" unique_id=1690379061]
+[node name="Platform2" type="StaticBody3D" parent="." unique_id=727981658]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.8212407, 10.18538)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2/StaticBody3D2" unique_id=889144892]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Platform2" unique_id=2137226629]
 material_override = SubResource("StandardMaterial3D_dwgg1")
 mesh = SubResource("BoxMesh_8fa42")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2/StaticBody3D2" unique_id=1757500981]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Platform2" unique_id=1936120590]
 shape = SubResource("BoxShape3D_xeixp")
+
+[node name="EnemyCube1" parent="." unique_id=627042725 instance=ExtResource("3_enemy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -6)
+
+[node name="EnemyCube2" parent="." unique_id=689866828 instance=ExtResource("3_enemy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -8)
+
+[node name="EnemyCube3" parent="." unique_id=1456284728 instance=ExtResource("3_enemy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 8)
+
+[node name="EnemyCube4" parent="." unique_id=420911626 instance=ExtResource("3_enemy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 12)
+
+[node name="EnemyCube5" parent="." unique_id=1839545603 instance=ExtResource("3_enemy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -16)

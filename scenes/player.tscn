@@ -1,134 +1,25 @@
 [gd_scene format=3 uid="uid://biqupegmed4vx"]
 
 [ext_resource type="Script" uid="uid://utt28bv5k7jc" path="res://scripts/player_controller.gd" id="1_3vyb7"]
+[ext_resource type="PackedScene" path="res://assets/characters/theta/theta.glb" id="2_theta"]
+[ext_resource type="Script" path="res://scripts/theta_animator.gd" id="3_anim"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u8vuu"]
 
-[sub_resource type="Animation" id="Animation_dqkch"]
-resource_name = "Idle"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PivotPoint:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
-"transitions": PackedFloat32Array(1, -2, 1),
-"update": 0,
-"values": [Vector3(1, 1, 1), Vector3(1.1, 0.9, 1.1), Vector3(1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_3vyb7"]
-resource_name = "Jump_Spin"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PivotPoint/Box:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.7),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 0, 3.1415927)]
-}
-
-[sub_resource type="Animation" id="Animation_g2els"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PivotPoint/Box:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CollisionShape3D:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("PivotPoint:scale")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_qhqgy"]
-resource_name = "Walk_Forward"
-length = 0.15
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PivotPoint/Box:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.15),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 0, -0.10471976)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CollisionShape3D:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.15),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 0, -0.10471976)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_g2els"]
-_data = {
-&"Idle": SubResource("Animation_dqkch"),
-&"Jump_Spin": SubResource("Animation_3vyb7"),
-&"RESET": SubResource("Animation_g2els"),
-&"Walk_Forward": SubResource("Animation_qhqgy")
-}
-
-[sub_resource type="BoxMesh" id="BoxMesh_d75mq"]
-size = Vector3(1, 2, 1)
-
 [node name="Player" type="CharacterBody3D" unique_id=188274961]
-transform = Transform3D(1.0294255, -1.6970064e-07, 0, 1.7999047e-07, 0.97057456, 0, 0, 0, 1.0294255, 0, 0, 0)
 script = ExtResource("1_3vyb7")
-
-[node name="Node3D" type="Node3D" parent="." unique_id=1926111931]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=132448869]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_u8vuu")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=37878533]
-libraries/ = SubResource("AnimationLibrary_g2els")
-
 [node name="PivotPoint" type="Node3D" parent="." unique_id=1981039369]
 
-[node name="Box" type="MeshInstance3D" parent="PivotPoint" unique_id=541765780]
+[node name="Model" type="Node3D" parent="PivotPoint" unique_id=541765780]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-mesh = SubResource("BoxMesh_d75mq")
+
+[node name="theta" parent="PivotPoint/Model" instance=ExtResource("2_theta")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=37878533]
+script = ExtResource("3_anim")

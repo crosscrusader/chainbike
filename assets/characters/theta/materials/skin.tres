@@ -1,0 +1,12 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3]
+
+[ext_resource type="Shader" path="res://assets/characters/theta/toon.gdshader" id="1_toon"]
+
+[resource]
+resource_name = "skin"
+render_priority = 0
+shader = ExtResource("1_toon")
+shader_parameter/base_color = Vector3(0.799, 0.44, 0.279)
+shader_parameter/band_pos = Vector3(0, 0.195, 9)
+shader_parameter/band_val = Vector3(0.234, 1, 1)
+shader_parameter/band_tint0 = Vector3(0.952, 0.374, 0.5)
