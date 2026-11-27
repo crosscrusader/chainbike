@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://biqupegmed4vx"]
 
 [ext_resource type="Script" uid="uid://utt28bv5k7jc" path="res://scripts/player_controller.gd" id="1_3vyb7"]
-[ext_resource type="PackedScene" path="res://assets/characters/theta/theta.glb" id="2_theta"]
-[ext_resource type="Script" path="res://scripts/theta_animator.gd" id="3_anim"]
+[ext_resource type="PackedScene" uid="uid://b3kdal8g7m2t8" path="res://assets/characters/theta/theta.glb" id="2_theta"]
+[ext_resource type="Script" uid="uid://0m47rm2t4jlb" path="res://scripts/theta_animator.gd" id="3_anim"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u8vuu"]
 
@@ -18,7 +18,7 @@ shape = SubResource("CapsuleShape3D_u8vuu")
 [node name="Model" type="Node3D" parent="PivotPoint" unique_id=541765780]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
-[node name="theta" parent="PivotPoint/Model" instance=ExtResource("2_theta")]
+[node name="theta" parent="PivotPoint/Model" unique_id=208231656 instance=ExtResource("2_theta")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=37878533]

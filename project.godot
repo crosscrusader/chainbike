@@ -12,11 +12,12 @@ config_version=5
 
 config/name="Chainbike"
 run/main_scene="uid://84wtin4u87do"
-config/features=PackedStringArray("4.6", "Forward Plus")
+config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
 [display]
 
+window/size/mode=2
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
